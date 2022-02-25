@@ -1,31 +1,19 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
-export class User extends BaseEntity {
+export class Booking extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    firstName: string;
+    numOfPeople: number;
 
     @Column()
-    lastName: string;
+    resTime: Date;
 
     @Column()
-    phone: string;
-
-    @Column()
-    password: string;
-
-    @Column({ default: null })
-    otp: number;
-
-    @Column({ default: false })
-    isVerified: boolean;
-
-    @Column({ default: true })
-    isActive: boolean;
+    expTime: Date;
 
     @CreateDateColumn()
     createdAt: Date;

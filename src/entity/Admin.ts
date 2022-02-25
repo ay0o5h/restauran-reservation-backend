@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
-export class User extends BaseEntity {
+export class Admin extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -10,19 +10,13 @@ export class User extends BaseEntity {
     firstName: string;
 
     @Column()
-    lastName: string;
+    lastName: string
 
     @Column()
     phone: string;
 
     @Column()
     password: string;
-
-    @Column({ default: null })
-    otp: number;
-
-    @Column({ default: false })
-    isVerified: boolean;
 
     @Column({ default: true })
     isActive: boolean;

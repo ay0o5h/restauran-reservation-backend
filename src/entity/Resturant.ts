@@ -1,31 +1,25 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
-export class User extends BaseEntity {
+export class Resturant extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    firstName: string;
+    name: string;
 
     @Column()
-    lastName: string;
+    numOfTable: number;
 
     @Column()
-    phone: string;
+    openDate: Date;
 
     @Column()
-    password: string;
-
-    @Column({ default: null })
-    otp: number;
+    closeDate: Date;
 
     @Column({ default: false })
-    isVerified: boolean;
-
-    @Column({ default: true })
-    isActive: boolean;
+    isOpen: boolean;
 
     @CreateDateColumn()
     createdAt: Date;
