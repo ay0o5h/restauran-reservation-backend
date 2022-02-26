@@ -7,7 +7,7 @@ import dashv1 from "../routes/dash/v1";
 import webv1 from "../routes/web/v1";
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 
 createConnection()
