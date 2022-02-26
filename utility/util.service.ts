@@ -22,11 +22,39 @@ const translate = (errCode, lang, v) => {
         en: {
             default: "Something went wrong",
             emptyCart: "cart shouldn't be empty",
+            phoneInvalid: `Phone ${v} is not valid`,
+            phoneExist: ` this number ${v} is already exist`,
+            otpReq: "Otp is required",
+            otpIncorrect: "otp is incorrect",
+            complete: "Please complete the registration process",
+            incorrectCred: "Incorrect credentials",
+            userNotFound: "User not found",
+            invalidOtp: "invalid one time password",
+            needRegister: "You need to register",
+            notActive: "the account is not active",
+            verifyAccount: "Please verify your account",
+            notFound: "Not Found",
+            alreadyVerified: "You are already verified"
         },
         ar: {
             default: "حصل خطأٌ ما ",
             emptyCart: "الرجاء ملئ السله",
             phoneExist: ` هذا الرقم ${v} موجود بالفعل`,
+            phoneInvalid: ` هذا الرقم ${v} غير صالح`,
+            otpReq: "رمز التحقق مطلوب",
+            otpIncorrect: "رمز التحقق غير صحصح",
+            complete: "اكمل عملية التسجيل من فضلك ",
+            incorrectCred: "هناك خطأ ما في رقم او كلمة المرور",
+            userNotFound: "المستخدم هذا غير موجود",
+            invalidOtp: "رمز المرور غير صالح",
+            needRegister: "تحتاج الى تسجيل",
+            notActive: "الحساب غير مفعل",
+            verifyAccount: "من فضلك قم بتأكيد حسابك",
+            notFound: "غير موجود",
+            alreadyVerified: "حسابك مؤكد بلفعل"
+
+
+
         },
     };
 

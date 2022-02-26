@@ -4,9 +4,10 @@ import { User } from "../../src/entity/User";
 import { errRes } from "../../utility/util.service";
 
 export default async (req, res, next) => {
-    // get the token
+    let lang: any;
+    lang = req.query.lang;
     const token = req.headers.token;
-    if (!token) return errRes(res, "You need to register");
+    if (!token) return errRes(res, "needRegister", 400, lang);
     // verify token
 
     try {
@@ -17,7 +18,7 @@ export default async (req, res, next) => {
         console.log({ user, payload });
 
         // check user isVerified
-        if (!user.isVerified) return errRes(res, `Please verify your account`);
+        if (!user.isVerified) return errRes(res, "verifyAccount", 400, lang);
         req.user = user;
         // next
         return next();

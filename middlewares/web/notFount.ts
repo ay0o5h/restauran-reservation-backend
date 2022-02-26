@@ -1,5 +1,7 @@
 import { errRes } from "../../utility/util.service";
 
 export default (req, res, next) => {
-    return errRes(res, `Not Found`, 404);
+    let lang: any;
+    lang = req.query.lang;
+    return errRes(res, "notFound", 404, lang);
 };

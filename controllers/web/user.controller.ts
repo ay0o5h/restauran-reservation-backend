@@ -19,7 +19,8 @@ export default class UserController {
      * @returns
      */
     static async register(req: Request, res: Response): Promise<object> {
-        // get the body
+        let lang: any;
+        lang = req.query.lang;
         const body = req.body;
         // validate the req
         let notValid = validate(body, Validator.register());
@@ -28,7 +29,8 @@ export default class UserController {
         // format to the number
         let phoneObj = PhoneFormat.getAllFormats(body.phone);
         if (!phoneObj.isNumber)
-            return errRes(res, `Phone ${body.phone} is not valid`);
+            // return errRes(res, `Phone ${body.phone} is not valid`);
+            return errRes(res, "phoneInvalid", 400, lang, body.phone);
 
         body.phone = phoneObj.globalP;
         let phone = phoneObj.globalP;
@@ -50,7 +52,7 @@ export default class UserController {
                 Object.keys(body).forEach((key) => {
                     user[key] = body[key];
                 });
-            } else return errRes(res, `user ${phone} is already exist`);
+            } else return errRes(res, "phoneExist", 400, lang, body.phone);
         } else {
             user = await User.create({
                 firstName: body.firstName,
@@ -88,10 +90,11 @@ export default class UserController {
      * @returns
      */
     static async checkOtp(req, res): Promise<object> {
-        // get the otp from body
+        let lang: any;
+        lang = req.query.lang;
         let body = req.body;
         let otp = body.otp;
-        if (!otp) return errRes(res, `Otp is required`);
+        if (!otp) return errRes(res, "otpReq", 400, lang);
         // check if they are the same DB
         let user = req.user;
 
@@ -100,7 +103,7 @@ export default class UserController {
         if (user.otp != otp) {
             // user.otp = null;
             // await user.save();
-            return errRes(res, "otp is incorrect");
+            return errRes(res, "otpIncorrect", 400, lang);
         }
 
 
@@ -118,7 +121,8 @@ export default class UserController {
      * @returns
      */
     static async login(req, res): Promise<object> {
-        // get body
+        let lang: any;
+        lang = req.query.lang;
         let body = req.body;
         // verify body
         let notValid = validate(body, Validator.login());
@@ -127,17 +131,17 @@ export default class UserController {
         // format to the number
         let phoneObj = PhoneFormat.getAllFormats(body.phone);
         if (!phoneObj.isNumber)
-            return errRes(res, `Phone ${body.phone} is not valid`);
+            return errRes(res, "phoneInvalid", 400, lang, body.phone);
 
         let phone = phoneObj.globalP;
         let password = body.password;
         // get user from db by phone + isVerified
         let user = await User.findOne({ where: { phone, isVerified: true } });
-        if (!user) return errRes(res, `Please complete the registration process`);
+        if (!user) return errRes(res, "complete", 400, lang);
 
         // compaire the password
         let check = await bcrypt.compare(password, user.password);
-        if (!check) return errRes(res, "Incorrect credentials");
+        if (!check) return errRes(res, "incorrectCred", 400, lang);
 
         // token
         let token = jwt.sign({ id: user.id }, CONFIG.jwtUserSecret);
@@ -154,7 +158,8 @@ export default class UserController {
      * @returns
      */
     static async forget(req, res) {
-
+        let lang: any;
+        lang = req.query.lang;
         let body = req.body;
 
         let notValid = validate(body, Validator.forget());
@@ -163,7 +168,7 @@ export default class UserController {
         // format phone
         let phoneObj = PhoneFormat.getAllFormats(body.phone);
         if (!phoneObj.isNumber)
-            return errRes(res, `Phone ${body.phone} is not valid`);
+            return errRes(res, "phoneInvalid", 400, lang, body.phone);
 
         let phone = phoneObj.globalP;
 
@@ -171,7 +176,7 @@ export default class UserController {
         let user = await User.findOne({
             where: { phone, isVerfied: true, isActive: true },
         });
-        if (!user) return errRes(res, `Please complete the registration process`);
+        if (!user) return errRes(res, "complete", 400);
 
         // create passwordOtp & save
         let otpNewPassword = getOtp();
@@ -192,7 +197,8 @@ export default class UserController {
      * @returns
      */
     static async verifyPassword(req, res) {
-        // validate
+        let lang: any;
+        lang = req.query.lang;
         let body = req.body;
 
         let notValid = validate(body, Validator.verifyPassword());
@@ -211,11 +217,11 @@ export default class UserController {
         }
 
         let user = await User.findOne({ where: { phone } });
-        if (!user) return errRes(res, "user not found");
+        if (!user) return errRes(res, "userNotFound", 400, lang);
 
         // compaire the passwordOtp from db & body
         if (body.passwordOtp != user.otpNewPassword)
-            return errRes(res, "invalid one time password");
+            return errRes(res, "invalidOtp", 400, lang);
 
         // hash new password
         let salt = await bcrypt.genSalt(12);
@@ -223,17 +229,19 @@ export default class UserController {
 
         // save new password
         user.password = password;
-        return okRes(res, { msg: "All good" });
+        return okRes(res, { msg: "All good 😊" });
     }
     static async deactive(req, res): Promise<object> {
+        let lang: any;
+        lang = req.query.lang;
         const token = req.headers.token;
-        if (!token) return errRes(res, "You need to register");
+        if (!token) return errRes(res, "needRegister", 400, lang);
         let data;
         try {
             let payload: any;
             payload = jwt.verify(token, CONFIG.jwtUserSecret);
             data = await User.findOne({ where: { id: payload.id } });
-            if (!data) return errRes(res, "Not Found");
+            if (!data) return errRes(res, "userNotFound", 400, lang);
             data.isActive = !data.isActive;
             await data.save();
         } catch (error) {
