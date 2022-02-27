@@ -1,4 +1,6 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Admin } from "./Admin";
+import { Tables } from "./Tables";
 
 @Entity()
 export class Resturant extends BaseEntity {
@@ -28,6 +30,10 @@ export class Resturant extends BaseEntity {
     updatedAt: Date;
 
     // TODO: make relationship
+    @ManyToOne((type) => Admin, (admin) => admin.rest)
+    admin: Admin;
+    @OneToMany((type) => Tables, (table) => table.rest)
+    table: Tables[];
 
 }
 
