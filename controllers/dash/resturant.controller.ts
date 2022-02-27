@@ -1,11 +1,10 @@
-import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import * as validate from "validate.js";
 import CONFIG from "../../config";
-import PhoneFormat from "../../utility/phoneFormat.service";
 import { errRes, okRes } from "../../utility/util.service";
 import Validator from "../../utility/validation";
 import { Admin } from './../../src/entity/Admin';
+import { Resturant } from './../../src/entity/Resturant';
 
 
 
@@ -17,34 +16,22 @@ export default class ResturantController {
      * @param res
      * @returns
      */
-    static async login(req, res): Promise<object> {
+    static async addResturant(req, res): Promise<object> {
         let lang: any;
         lang = req.query.lang;
         let body = req.body;
-        // verify body
-        let notValid = validate(body, Validator.login());
+
+        let notValid = validate(body, Validator.resturant());
         if (notValid) return errRes(res, notValid);
 
-        // format to the number
-        let phoneObj = PhoneFormat.getAllFormats(body.phone);
-        if (!phoneObj.isNumber)
-            return errRes(res, "phoneInvalid", 400, lang, body.phone);
 
-        let phone = phoneObj.globalP;
-        let password = body.password;
-
-        let admin = await Admin.findOne({ where: { phone, isActive: true } });
+        let rest = await Resturant.findOne({ where: { name: body.name } });
+        if (rest) return errRes(res, "alreadyExist", 400, lang)
 
 
-        // compaire the password
-        let check = await bcrypt.compare(password, admin.password);
-        if (!check) return errRes(res, "incorrectCred", 400, lang);
-
-        // token
-        let token = jwt.sign({ id: admin.id }, CONFIG.jwtUserSecret);
 
         // return token
-        return okRes(res, { token, admin });
+        return okRes(res, { rest });
     }
     static async deactive(req, res): Promise<object> {
         let lang: any;

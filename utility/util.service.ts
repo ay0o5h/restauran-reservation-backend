@@ -34,7 +34,8 @@ const translate = (errCode, lang, v) => {
             notActive: "the account is not active",
             verifyAccount: "Please verify your account",
             notFound: "Not Found",
-            alreadyVerified: "You are already verified"
+            alreadyVerified: "You are already verified",
+            alreadyExist: " already exist",
         },
         ar: {
             default: "حصل خطأٌ ما ",
@@ -51,7 +52,8 @@ const translate = (errCode, lang, v) => {
             notActive: "الحساب غير مفعل",
             verifyAccount: "من فضلك قم بتأكيد حسابك",
             notFound: "غير موجود",
-            alreadyVerified: "حسابك مؤكد بلفعل"
+            alreadyVerified: "حسابك مؤكد بلفعل",
+            alreadyExist: "موجود بلفعل"
 
 
 

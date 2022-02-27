@@ -48,4 +48,32 @@ export default class Validate {
             type: "string",
         },
     });
+    static resturant = (must = true) => ({
+        name: {
+            presence: must,
+            type: "string",
+        },
+        bgImage: {
+            presence: must,
+            type: "string",
+        },
+        tablesMap: {
+            presence: must,
+            type: "string",
+        },
+        numOfTable: {
+            presence: false,
+            type: "number",
+        },
+        openDate: {
+            presence: must,
+            type: "string",
+        },
+        closeDate: {
+            presence: must,
+            type: "string",
+        },
+
+
+    });
 }
