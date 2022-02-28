@@ -1,17 +1,23 @@
 import * as express from "express";
-// import otp from "../../middlewares/web/otp";
-import auth from "../../middlewares/web/auth";
-
+import AdminController from "../../controllers/dash/admin.controller";
+import ResturantController from '../../controllers/dash/resturant.controller';
+import auth from "../../middlewares/dash/auth";
 const route = express.Router();
 
 /// Not Auth
-route.post("/register",);
+route.post("/login", AdminController.login);
 
 
 
 
 //  Need Auth
 route.use(auth);
+// resturant
+route.get("/resturant", ResturantController.getResturant);
+route.post("/resturant-add", ResturantController.addResturant);
+route.put("/resturant-edit/:id", ResturantController.editResturant);
+route.delete("/resturant-delete/:id", ResturantController.deleteResturant);
+
 
 
 

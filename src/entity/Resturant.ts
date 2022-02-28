@@ -12,6 +12,11 @@ export class Resturant extends BaseEntity {
     name: string;
 
     @Column()
+    bgImage: string;
+    @Column()
+    floorMap: string;
+
+    @Column()
     numOfTable: number;
 
     @Column()
