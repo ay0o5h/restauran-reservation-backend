@@ -1,10 +1,10 @@
 {
    "type": "postgres",
-   "host": "ec2-44-194-113-156.compute-1.amazonaws.com",
+   "host": "jelani.db.elephantsql.com",
    "port": 5432,
-   "username": "teajlkvevmceam",
-   "password": "e121a9d2d235f5207679325f89aa80290b8a8db44fe48781c97eecc96b351211",
-   "database": "dce0fvmg5u4a6",
+   "username": "dqsfevpt",
+   "password": "RdTIhRLQQNqS3Lpg-nvjgVsI-VtSJjdt",
+   "database": "dqsfevpt",
    "synchronize": true,
    "logging": false,
    "entities": [
