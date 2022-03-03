@@ -9,6 +9,8 @@ const route = express.Router();
 route.post("/register", UserController.register);
 route.post("/otp", otp, UserController.checkOtp);
 route.post("/login", UserController.login);
+route.post("/forget/password", UserController.forget);
+route.post("/verify/password", UserController.verifyPassword);
 route.get("/resturant", ResturantController.getOneResturant);
 route.get("/resturant-all", ResturantController.getAllResturants);
 
