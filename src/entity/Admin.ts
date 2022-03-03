@@ -19,8 +19,17 @@ export class Admin extends BaseEntity {
     @Column()
     password: string;
 
+    @Column({ default: null })
+    otp: number;
+
+    @Column({ default: false })
+    isVerified: boolean;
+
     @Column({ default: true })
     isActive: boolean;
+
+    @Column({ nullable: true })
+    otpNewPassword: number;
 
     @CreateDateColumn()
     createdAt: Date;
