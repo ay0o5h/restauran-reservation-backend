@@ -44,7 +44,7 @@ export default class AdminController {
 
         // check if the user already exists
         let admin;
-        admin = await admin.findOne({ where: { phone } });
+        admin = await Admin.findOne({ where: { phone } });
         // if exists but not verified
         if (admin) {
             if (!admin.isVerfied) {
@@ -53,7 +53,7 @@ export default class AdminController {
                 });
             } else return errRes(res, "phoneExist", 400, lang, body.phone);
         } else {
-            admin = await admin.create({
+            admin = await Admin.create({
                 firstName: body.firstName,
                 lastName: body.lastName,
                 phone: body.phone,
