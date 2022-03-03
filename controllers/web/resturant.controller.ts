@@ -10,7 +10,14 @@ export default class ResturantController {
      */
     static async getAllResturants(req, res): Promise<object> {
 
-        let rest = await Resturant.find();
+        let rest = await Resturant.find({
+            join: {
+                alias: "rest",
+                leftJoinAndSelect: {
+                    table: "rest.table",
+                },
+            }
+        });
         return okRes(res, { rest });
 
     }

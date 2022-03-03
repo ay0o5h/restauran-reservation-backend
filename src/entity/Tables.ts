@@ -14,7 +14,7 @@ export class Tables extends BaseEntity {
     @Column()
     y: number;
 
-    @Column()
+    @Column({ default: false })
     isBooked: boolean;
 
     @CreateDateColumn()

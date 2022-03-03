@@ -1,4 +1,5 @@
 import * as validate from "validate.js";
+import { Tables } from "../../src/entity/Tables";
 import { errRes, okRes } from "../../utility/util.service";
 import Validator from "../../utility/validation";
 import { Resturant } from './../../src/entity/Resturant';
@@ -17,7 +18,16 @@ export default class ResturantController {
         let id = req.params.id;
         let lang: any;
         lang = req.query.lang;
-        let rest = await Resturant.findOne({ where: { id: id, admin: req.admin } });
+        let rest = await Resturant.findOne(
+            {
+                where: { id: id, admin: req.admin },
+                join: {
+                    alias: "rest",
+                    leftJoinAndSelect: {
+                        table: "rest.table",
+                    },
+                },
+            });
         if (!rest) return errRes(res, "notFound", 404, lang);
         return okRes(res, { rest });
 
@@ -59,14 +69,16 @@ export default class ResturantController {
 
         let rest = await Resturant.findOne({ where: { id: id, admin: req.admin } });
         if (!rest) return errRes(res, "notFound", 404, lang);
-        rest.name = body.name,
-            rest.bgImage = body.bgImage,
-            rest.floorMap = body.floorMap,
-            rest.numOfTable = body.numOfTable,
-            rest.openDate = body.openDate,
-            rest.closeDate = body.closeDate,
-
-            await rest.save();
+        // rest.name = body.name,
+        //     rest.bgImage = body.bgImage,
+        //     rest.floorMap = body.floorMap,
+        //     rest.numOfTable = body.numOfTable,
+        //     rest.openDate = body.openDate,
+        //     rest.closeDate = body.closeDate,
+        Object.keys(rest).forEach((key) => {
+            if (body[key]) rest[key] = body[key];
+        });
+        await rest.save();
         // return token
         return okRes(res, { rest });
     }
@@ -76,15 +88,83 @@ export default class ResturantController {
         lang = req.query.lang;
         let id = req.params.id;
         let rest;
-
+        let table;
 
         rest = await Resturant.findOne({ where: { id: id, admin: req.admin } });
         if (!rest) return errRes(res, "notFound", 404, lang);
+
+
+        table = await Tables.find({ where: { rest: id } });
+        if (!table) return errRes(res, "notFound", 404, lang);
+
+        for (let i = 0; i < table.length; i++) {
+            await table[i].remove();
+        }
+
+
         rest = await Resturant.delete(id);
 
         return okRes(res, { rest });
     }
+    static async getTables(req, res): Promise<object> {
+        let id = req.params.id;
+        let lang: any;
+        lang = req.query.lang;
+        let table = await Tables.find({ where: { rest: id } });
+        if (!table) return errRes(res, "notFound", 404, lang);
+        return okRes(res, { table });
+
+    }
+    static async addTable(req, res): Promise<object> {
+        let lang: any;
+        lang = req.query.lang;
+        let body = req.body;
+
+        let notValid = validate(body, Validator.table());
+        if (notValid) return errRes(res, notValid);
 
 
+        let table;
+        table = await Tables.findOne({ where: { x: body.x, y: body.y } });
+        if (table) return errRes(res, "alreadyExist", 400, lang);
 
+        table = await Tables.create({
+            ...body
+        })
+        await table.save();
+        // return token
+        return okRes(res, { table });
+    }
+    static async editTable(req, res): Promise<object> {
+        let id = req.params.id
+        let lang: any;
+        lang = req.query.lang;
+        let body = req.body;
+
+        let notValid = validate(body, Validator.table(false));
+        if (notValid) return errRes(res, notValid);
+
+
+        let table = await Tables.findOne({ where: { id: id } });
+        if (!table) return errRes(res, "notFound", 404, lang);
+        // table.x = body.x,
+        //     table.y = body.y,
+        Object.keys(table).forEach((key) => {
+            if (body[key]) table[key] = body[key];
+        });
+
+        await table.save();
+        // return token
+        return okRes(res, { table });
+    }
+    static async deleteTable(req, res): Promise<object> {
+        let lang: any;
+        lang = req.query.lang;
+        let id = req.params.id;
+        let table;
+        table = await Tables.findOne({ where: { id: id } });
+        if (!table) return errRes(res, "notFound", 404, lang);
+        table = await Tables.delete(id);
+        return okRes(res, { table });
+    }
 }

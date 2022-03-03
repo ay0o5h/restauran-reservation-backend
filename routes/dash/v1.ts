@@ -18,6 +18,12 @@ route.post("/resturant-add", ResturantController.addResturant);
 route.put("/resturant-edit/:id", ResturantController.editResturant);
 route.delete("/resturant-delete/:id", ResturantController.deleteResturant);
 
+// tables 
+route.get("/table", ResturantController.getTables);
+route.post("/table-add", ResturantController.addTable);
+route.put("/table-edit/:id", ResturantController.editTable);
+route.delete("/table-delete/:id", ResturantController.deleteTable);
+
 
 
 

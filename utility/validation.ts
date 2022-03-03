@@ -73,7 +73,24 @@ export default class Validate {
             presence: must,
             type: "string",
         },
+        admin: {
+            presence: must,
+            type: "number",
+        },
 
-
+    });
+    static table = (must = true) => ({
+        x: {
+            presence: must,
+            type: "number",
+        },
+        y: {
+            presence: must,
+            type: "number",
+        },
+        rest: {
+            presence: must,
+            type: "number",
+        },
     });
 }
