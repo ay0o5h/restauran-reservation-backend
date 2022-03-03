@@ -14,6 +14,20 @@ export default class ResturantController {
      * @param res
      * @returns
      */
+    static async getAllResturants(req, res): Promise<object> {
+
+        let rest = await Resturant.find({
+            where: { admin: req.admin },
+            join: {
+                alias: "rest",
+                leftJoinAndSelect: {
+                    table: "rest.table",
+                },
+            }
+        });
+        return okRes(res, { rest });
+
+    }
     static async getResturant(req, res): Promise<object> {
         let id = req.params.id;
         let lang: any;

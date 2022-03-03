@@ -16,13 +16,14 @@ route.post("/otp", otp, AdminController.checkOtp);
 //  Need Auth
 route.use(auth);
 // resturant
-route.get("/resturant", ResturantController.getResturant);
+route.get("/resturant/:id", ResturantController.getResturant);
+route.get("/resturant", ResturantController.getAllResturants);
 route.post("/resturant-add", ResturantController.addResturant);
 route.put("/resturant-edit/:id", ResturantController.editResturant);
 route.delete("/resturant-delete/:id", ResturantController.deleteResturant);
 
 // tables 
-route.get("/table", ResturantController.getTables);
+route.get("/table/:id", ResturantController.getTables);
 route.post("/table-add", ResturantController.addTable);
 route.put("/table-edit/:id", ResturantController.editTable);
 route.delete("/table-delete/:id", ResturantController.deleteTable);
