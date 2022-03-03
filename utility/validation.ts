@@ -57,7 +57,7 @@ export default class Validate {
             presence: must,
             type: "string",
         },
-        tablesMap: {
+        floorMap: {
             presence: must,
             type: "string",
         },
@@ -73,10 +73,7 @@ export default class Validate {
             presence: must,
             type: "string",
         },
-        admin: {
-            presence: must,
-            type: "number",
-        },
+
 
     });
     static table = (must = true) => ({
