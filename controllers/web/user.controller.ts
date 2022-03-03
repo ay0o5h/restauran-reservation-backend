@@ -174,7 +174,7 @@ export default class UserController {
 
         // get admin from db using phone + isVerified
         let user = await User.findOne({
-            where: { phone, isVerfied: true, isActive: true },
+            where: { phone, isVerified: true, isActive: true },
         });
         if (!user) return errRes(res, "complete", 400);
 
