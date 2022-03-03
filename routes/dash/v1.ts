@@ -6,6 +6,7 @@ const route = express.Router();
 
 /// Not Auth
 route.post("/login", AdminController.login);
+route.post("/register", AdminController.register);
 
 
 

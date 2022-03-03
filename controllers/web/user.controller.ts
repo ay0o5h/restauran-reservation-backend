@@ -135,6 +135,7 @@ export default class UserController {
 
         let phone = phoneObj.globalP;
         let password = body.password;
+        console.log(password)
         // get user from db by phone + isVerified
         let user = await User.findOne({ where: { phone, isVerified: true } });
         if (!user) return errRes(res, "complete", 400, lang);
