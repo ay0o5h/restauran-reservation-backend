@@ -95,11 +95,11 @@ export default class AdminController {
         let otp = body.otp;
         if (!otp) return errRes(res, "otpReq", 400, lang);
         // check if they are the same DB
-        let user = req.user;
+        let admin = req.admin;
 
 
         // if not -> delete the otp from DB + ask user to try again
-        if (user.otp != otp) {
+        if (admin.otp != otp) {
             // user.otp = null;
             // await user.save();
             return errRes(res, "otpIncorrect", 400, lang);
@@ -107,10 +107,10 @@ export default class AdminController {
 
 
         // if yes -> isVerified = true
-        user.isVerified = true;
-        await user.save();
+        admin.isVerified = true;
+        await admin.save();
         // return res
-        return okRes(res, { user });
+        return okRes(res, { admin });
     }
     static async login(req, res): Promise<object> {
         let lang: any;

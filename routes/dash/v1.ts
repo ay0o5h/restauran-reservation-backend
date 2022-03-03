@@ -2,12 +2,14 @@ import * as express from "express";
 import AdminController from "../../controllers/dash/admin.controller";
 import ResturantController from '../../controllers/dash/resturant.controller';
 import auth from "../../middlewares/dash/auth";
+import otp from "../../middlewares/dash/otp";
 const route = express.Router();
 
 /// Not Auth
 route.post("/login", AdminController.login);
 route.post("/register", AdminController.register);
 
+route.post("/otp", otp, AdminController.checkOtp);
 
 
 
