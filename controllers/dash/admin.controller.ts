@@ -33,7 +33,7 @@ export default class AdminController {
         let phone = phoneObj.globalP;
         let password = body.password;
 
-        let admin = await Admin.findOne({ where: { phone, isActive: true } });
+        let admin = await Admin.findOne({ where: { phone } });
         if (!admin) errRes(res, "complete", 400, lang);
         // compaire the password
         let check = await bcrypt.compare(password, admin.password);
