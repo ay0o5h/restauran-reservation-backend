@@ -25,7 +25,16 @@ export default class ResturantController {
         let id = req.params.id;
         let lang: any;
         lang = req.query.lang;
-        let rest = await Resturant.findOne({ where: { id: id } });
+        let rest = await Resturant.findOne({
+            where: { id: id },
+            join: {
+                alias: "rest",
+                leftJoinAndSelect: {
+                    table: "rest.table",
+                },
+            }
+
+        });
         if (!rest) return errRes(res, "notFound", 404, lang);
         return okRes(res, { rest });
 
