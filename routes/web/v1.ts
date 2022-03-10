@@ -18,7 +18,7 @@ route.get("/resturant-all", ResturantController.getAllResturants);
 
 //  Need Auth
 route.use(auth);
+route.post("/resturant/:id/booking", BookingController.makeBooking);
 
-route.get("/resturant/:id/booking", BookingController.makeBooking);
 
 export default route;

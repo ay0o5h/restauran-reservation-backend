@@ -36,6 +36,11 @@ const translate = (errCode, lang, v) => {
             notFound: "Not Found",
             alreadyVerified: "You are already verified",
             alreadyExist: " already exist",
+            resturantOpen: "resturant open now",
+            resturantClose: "resturant close now",
+            invalidtoken: "invalid token",
+            tableIsBooked: "table is already booked",
+
         },
         ar: {
             default: "حصل خطأٌ ما ",
@@ -53,7 +58,11 @@ const translate = (errCode, lang, v) => {
             verifyAccount: "من فضلك قم بتأكيد حسابك",
             notFound: "غير موجود",
             alreadyVerified: "حسابك مؤكد بلفعل",
-            alreadyExist: "موجود بلفعل"
+            alreadyExist: "موجود بلفعل",
+            resturantOpen: "المطعم مفتوح الان يمكنك الحجز",
+            resturantClose: "المطعم مغلق الان ",
+            invalidtoken: "invalid token",
+            tableIsBooked: "الطاولة محجوزه بلفعل",
 
 
 

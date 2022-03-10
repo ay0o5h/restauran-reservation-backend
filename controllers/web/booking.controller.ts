@@ -1,4 +1,6 @@
-import { okRes } from "../../utility/util.service";
+import { Booking } from "../../src/entity/Booking";
+import { Tables } from "../../src/entity/Tables";
+import { errRes, okRes } from "../../utility/util.service";
 import { Resturant } from './../../src/entity/Resturant';
 
 import moment = require("moment");
@@ -14,6 +16,9 @@ export default class BookingController {
         let id = req.params.id;
         let lang: any;
         lang = req.query.lang;
+        let body = req.body;
+        let book;
+        let table;
         let rest = await Resturant.findOne({
             where: { id: id },
             join: {
@@ -23,16 +28,47 @@ export default class BookingController {
                 },
             }
         });
-        let o = moment(rest.openDate).format('LT');
-        let c = moment(rest.closeDate).format('LT');
-        let n = moment().format('LT');
-        if (o === n) return okRes(res, "resturant is open");
-        if (c === n) return okRes(res, "resturant is closed");
-        if (o !== n && c !== n) return okRes(res, "way to go my sun");
+        let open = moment(rest.openDate).format('LT');
+        let close = moment(rest.closeDate).format('LT');
+        let nowDate = moment().format('LT');
+        console.log(nowDate);
+        console.log(close);
+        console.log(open);
 
-        return okRes(res, { rest, o, c, n });
+
+        if (open === nowDate) errRes(res, "resturantOpen", 404, lang);
+        else if (close === nowDate) errRes(res, "resturantClose", 404, lang);
+        else if (open !== nowDate && close !== nowDate) {
+
+            console.log("way to go my sun");
+            for (let i = 0; i < rest.table.length; i++) {
+                if (rest.table[i].isBooked && body.table === rest.table[i].id) {
+                    errRes(res, "tableIsBooked", 404, lang);
+                } else {
+                    book = await Booking.create({
+                        numOfPeople: body.numOfPeople,
+                        resTime: body.resTime,
+                        expTime: body.expTime,
+                        user: req.user,
+                        table: body.table,
+                    });
+                    table = await Tables.findOne({ where: { id: body.table } })
+
+                    table.isBooked = true
+                }
+            }
+            await table.save();
+            await book.save();
+
+        }
+
+        return okRes(res, { book });
 
 
     }
-
+    static async booking(req, res): Promise<object> {
+        let n = moment().format('LT');
+        console.log(n);
+        return okRes(res, { n });
+    }
 }

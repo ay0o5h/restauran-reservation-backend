@@ -23,6 +23,6 @@ export default async (req, res, next) => {
         // next
         return next();
     } catch (error) {
-        return errRes(res, "invalid token");
+        return errRes(res, "invalidtoken", 400, lang);
     }
 };
