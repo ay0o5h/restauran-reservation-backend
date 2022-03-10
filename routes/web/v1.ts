@@ -1,4 +1,5 @@
 import * as express from "express";
+import BookingController from '../../controllers/web/booking.controller';
 import ResturantController from '../../controllers/web/resturant.controller';
 import UserController from '../../controllers/web/user.controller';
 import auth from "../../middlewares/web/auth";
@@ -18,6 +19,6 @@ route.get("/resturant-all", ResturantController.getAllResturants);
 //  Need Auth
 route.use(auth);
 
-
+route.get("/resturant/:id/booking", BookingController.makeBooking);
 
 export default route;
