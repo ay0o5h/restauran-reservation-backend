@@ -20,7 +20,7 @@ route.get("/resturant-all", ResturantController.getAllResturants);
 route.use(auth);
 // booking
 route.post("/resturant/:id/booking", BookingController.makeBooking);
-route.put("booking/id/:id", BookingController.EditReservation);
+route.put("booking/edit/:id", BookingController.EditReservation);
 route.put("booking/cancel/:id", BookingController.cancalReservation);
 route.delete("booking/delete/:id", BookingController.DeleteReservation);
 
