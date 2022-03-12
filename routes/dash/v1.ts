@@ -1,5 +1,6 @@
 import * as express from "express";
 import AdminController from "../../controllers/dash/admin.controller";
+import BookingController from '../../controllers/dash/booking.controller';
 import ResturantController from '../../controllers/dash/resturant.controller';
 import auth from "../../middlewares/dash/auth";
 import otp from "../../middlewares/dash/otp";
@@ -27,6 +28,9 @@ route.get("/table/:id", ResturantController.getTables);
 route.post("/table-add", ResturantController.addTable);
 route.put("/table-edit/:id", ResturantController.editTable);
 route.delete("/table-delete/:id", ResturantController.deleteTable);
+
+// booking 
+route.put("/table/:table/booking/:id", BookingController.changeState)
 
 
 

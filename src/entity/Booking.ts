@@ -14,8 +14,9 @@ export class Booking extends BaseEntity {
     @Column()
     resTime: Date;
 
-    @Column()
-    expTime: Date;
+    @Column({ default: false })
+    isEnd: boolean;
+
 
     @CreateDateColumn()
     createdAt: Date;

@@ -48,7 +48,6 @@ export default class BookingController {
                     book = await Booking.create({
                         numOfPeople: body.numOfPeople,
                         resTime: body.resTime,
-                        expTime: body.expTime,
                         user: req.user,
                         table: body.table,
                     });
@@ -59,16 +58,7 @@ export default class BookingController {
             }
             await table.save();
             await book.save();
-
         }
-
         return okRes(res, { book });
-
-
-    }
-    static async booking(req, res): Promise<object> {
-        let n = moment().format('LT');
-        console.log(n);
-        return okRes(res, { n });
     }
 }

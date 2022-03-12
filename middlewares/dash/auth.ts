@@ -20,6 +20,7 @@ export default async (req, res, next) => {
 
 
         if (!admin.isActive) return errRes(res, "notActive", 400, lang);
+        if (!admin.isVerified) return errRes(res, "verifyAccount", 400, lang);
         req.admin = admin;
         // next
         return next();
