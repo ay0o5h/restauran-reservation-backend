@@ -18,7 +18,14 @@ route.get("/resturant-all", ResturantController.getAllResturants);
 
 //  Need Auth
 route.use(auth);
+// booking
 route.post("/resturant/:id/booking", BookingController.makeBooking);
+route.put("booking/id/:id", BookingController.EditReservation);
+route.put("booking/cancel/:id", BookingController.cancalReservation);
+route.delete("booking/delete/:id", BookingController.DeleteReservation);
+
+
+
 
 
 export default route;

@@ -1,6 +1,6 @@
 import { Booking } from "../../src/entity/Booking";
 import { Tables } from "../../src/entity/Tables";
-import { okRes } from "../../utility/util.service";
+import { errRes, okRes } from "../../utility/util.service";
 
 import moment = require("moment");
 export default class BookingController {
@@ -11,7 +11,7 @@ export default class BookingController {
      * @param res
      * @returns
      */
-    static async changeState(req, res): Promise<object> {
+    static async makeItDone(req, res): Promise<object> {
         let id = req.params.id;
         let idtable = req.params.table
         let lang: any;
@@ -25,5 +25,18 @@ export default class BookingController {
         await table.save();
 
         return okRes(res, { table, booking });
+    }
+    static async changeState(req, res): Promise<object> {
+        let id = req.params.id;
+        let lang: any;
+        lang = req.query.lang;
+        let data;
+        let body = req.body;
+        data = await Booking.findOne({ where: { id: id }, });
+        if (!data) return errRes(res, "notFound", 404, lang);
+        data.status = body.status;
+        await data.save();
+
+        return okRes(res, { data });
     }
 }

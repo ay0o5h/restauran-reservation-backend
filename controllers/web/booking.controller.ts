@@ -61,4 +61,41 @@ export default class BookingController {
         }
         return okRes(res, { book });
     }
+    static async EditReservation(req, res): Promise<object> {
+        let id = req.params.id;
+        let lang: any;
+        lang = req.query.lang;
+        let body = req.body;
+
+        let data = await Booking.findOne({ where: { id: id }, });
+        data.numOfPeople = body.numOfPeople;
+        data.resTime = body.resTime;
+        data.table = body.table,
+            await data.save();
+
+        return okRes(res, { data });
+    }
+    static async cancalReservation(req, res): Promise<object> {
+        let id = req.params.id;
+        let lang: any;
+        lang = req.query.lang;
+        let data
+        data = await Booking.findOne({ where: { id: id }, });
+
+        if (!data) return errRes(res, "notFound", 404, lang);
+        data.status = "cancaled";
+        await data.save();
+
+        return okRes(res, { data });
+    }
+    static async DeleteReservation(req, res): Promise<object> {
+        let id = req.params.id;
+        let lang: any;
+        lang = req.query.lang;
+        let data
+        data = await Booking.findOne({ where: { id: id }, });
+        if (!data) return errRes(res, "notFound", 404, lang);
+        data = await Booking.delete(id);
+        return okRes(res, { data });
+    }
 }

@@ -16,7 +16,8 @@ export class Booking extends BaseEntity {
 
     @Column({ default: false })
     isEnd: boolean;
-
+    @Column({ default: null })
+    status: boolean;
 
     @CreateDateColumn()
     createdAt: Date;
