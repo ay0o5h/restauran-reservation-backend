@@ -16,7 +16,7 @@ export default class BookingController {
         let id = req.params.id;
         let lang: any;
         lang = req.query.lang;
-        let data = await Booking.findOne({
+        let data = await Booking.find({
             isEnd: false, user: req.user
         });
         return okRes(res, { data })
@@ -25,7 +25,7 @@ export default class BookingController {
         let id = req.params.id;
         let lang: any;
         lang = req.query.lang;
-        let data = await Booking.findOne({
+        let data = await Booking.find({
             isEnd: true, user: req.user
         });
         return okRes(res, { data })
