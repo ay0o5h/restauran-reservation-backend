@@ -23,6 +23,10 @@ route.post("/resturant/:id/booking", BookingController.makeBooking);
 route.put("booking/edit/:id", BookingController.EditReservation);
 route.put("booking/cancel/:id", BookingController.cancalReservation);
 route.delete("booking/delete/:id", BookingController.DeleteReservation);
+route.get("booking/active", BookingController.getActiveBookings);
+
+route.get("booking/previous", BookingController.getPreviousBookings);
+
 
 
 

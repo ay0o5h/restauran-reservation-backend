@@ -12,6 +12,24 @@ export default class BookingController {
      * @param res
      * @returns
      */
+    static async getActiveBookings(req, res): Promise<object> {
+        let id = req.params.id;
+        let lang: any;
+        lang = req.query.lang;
+        let data = await Booking.findOne({
+            isEnd: false, user: req.user
+        });
+        return okRes(res, { data })
+    }
+    static async getPreviousBookings(req, res): Promise<object> {
+        let id = req.params.id;
+        let lang: any;
+        lang = req.query.lang;
+        let data = await Booking.findOne({
+            isEnd: true, user: req.user
+        });
+        return okRes(res, { data })
+    }
     static async makeBooking(req, res): Promise<object> {
         let id = req.params.id;
         let lang: any;
