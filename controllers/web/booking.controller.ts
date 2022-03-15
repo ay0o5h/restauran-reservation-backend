@@ -101,8 +101,13 @@ export default class BookingController {
         data = await Booking.findOne({ where: { id: id }, });
 
         if (!data) return errRes(res, "notFound", 404, lang);
-        data.status = "cancaled";
-        await data.save();
+        if (data.status === null) {
+            data.status = "cancaled";
+            data.isEnd = true;
+
+            await data.save();
+        }
+
 
         return okRes(res, { data });
     }
