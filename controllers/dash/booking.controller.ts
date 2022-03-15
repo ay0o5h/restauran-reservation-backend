@@ -35,6 +35,7 @@ export default class BookingController {
         data = await Booking.findOne({ where: { id: id }, });
         if (!data) return errRes(res, "notFound", 404, lang);
         data.status = body.status;
+        body.status === "reject" ? data.isEnd = true : data.isEnd = false;
         await data.save();
 
         return okRes(res, { data });
