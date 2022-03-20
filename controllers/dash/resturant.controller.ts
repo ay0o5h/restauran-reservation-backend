@@ -132,7 +132,7 @@ export default class ResturantController {
 
 
         let table;
-        table = await Tables.findOne({ where: { x: body.x, y: body.y } });
+        table = await Tables.findOne({ where: { rest: body.rest, x: body.x, y: body.y } });
         if (table) return errRes(res, "alreadyExist", 400, lang);
 
         table = await Tables.create({
