@@ -77,6 +77,10 @@ export default class Validate {
 
     });
     static table = (must = true) => ({
+        tableNum: {
+            presence: must,
+            type: "number",
+        },
         x: {
             presence: must,
             type: "number",

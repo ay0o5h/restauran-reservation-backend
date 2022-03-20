@@ -13,6 +13,7 @@ route.post("/register", AdminController.register);
 route.post("/otp", otp, AdminController.checkOtp);
 
 
+route.put("/resturant/:id", ResturantController.updateStateOpining);
 
 //  Need Auth
 route.use(auth);

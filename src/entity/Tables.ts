@@ -9,6 +9,8 @@ export class Tables extends BaseEntity {
     id: number;
 
     @Column()
+    tableNum: number;
+    @Column()
     x: number;
 
     @Column()

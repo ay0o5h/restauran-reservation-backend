@@ -4,6 +4,7 @@ import { errRes, okRes } from "../../utility/util.service";
 import Validator from "../../utility/validation";
 import { Resturant } from './../../src/entity/Resturant';
 
+import moment = require("moment");
 
 
 export default class ResturantController {
@@ -68,7 +69,6 @@ export default class ResturantController {
             admin: req.admin
         })
         await rest.save();
-        // return token
         return okRes(res, { rest });
     }
     static async editResturant(req, res): Promise<object> {
@@ -83,17 +83,10 @@ export default class ResturantController {
 
         let rest = await Resturant.findOne({ where: { id: id, admin: req.admin } });
         if (!rest) return errRes(res, "notFound", 404, lang);
-        // rest.name = body.name,
-        //     rest.bgImage = body.bgImage,
-        //     rest.floorMap = body.floorMap,
-        //     rest.numOfTable = body.numOfTable,
-        //     rest.openDate = body.openDate,
-        //     rest.closeDate = body.closeDate,
         Object.keys(rest).forEach((key) => {
             if (body[key]) rest[key] = body[key];
         });
         await rest.save();
-        // return token
         return okRes(res, { rest });
     }
 
@@ -180,5 +173,26 @@ export default class ResturantController {
         if (!table) return errRes(res, "notFound", 404, lang);
         table = await Tables.delete(id);
         return okRes(res, { table });
+    }
+    static async updateStateOpining(req, res): Promise<object> {
+        let id = req.params.id;
+        let rest = await Resturant.findOne({ where: { id: id } });
+        var hours = [];
+
+        for (let i = Number(moment(rest.closeDate).format("HH")); i < 24; i++) {
+            hours.push(i);
+        }
+        for (let j = Number(moment(rest.openDate).format("HH")) - 1; j > 0; j--) {
+            hours.push(j);
+        }
+        if (hours.includes(Number(moment().format("HH")))) {
+
+            rest.isOpen = false;
+        } else {
+            rest.isOpen = true;
+
+        }
+        await rest.save();
+        return okRes(res, { rest });
     }
 }
