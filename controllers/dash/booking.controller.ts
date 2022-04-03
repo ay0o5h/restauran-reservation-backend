@@ -1,4 +1,5 @@
 import { Booking } from "../../src/entity/Booking";
+import { Resturant } from "../../src/entity/Resturant";
 import { Tables } from "../../src/entity/Tables";
 import { errRes, okRes } from "../../utility/util.service";
 
@@ -39,5 +40,29 @@ export default class BookingController {
         await data.save();
 
         return okRes(res, { data });
+    }
+    static async getActiveBookings(req, res): Promise<object> {
+        let id = req.params.id;
+        let lang: any;
+        lang = req.query.lang;
+        // let data = await Booking.find({
+        //     isEnd: false, user: req.user,
+
+        // },
+
+        // );
+        let rest = await Resturant.find({
+            where: { admin: req.admin },
+            join: {
+                alias: "rest",
+                leftJoinAndSelect: {
+                    table: "rest.table",
+                    book: "table.book",
+                    user: "book.user",
+                },
+            }
+        });
+        return okRes(res, { rest });
+        // return okRes(res, { data })
     }
 }

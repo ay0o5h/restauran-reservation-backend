@@ -33,6 +33,8 @@ route.delete("/table-delete/:id", ResturantController.deleteTable);
 // booking 
 route.put("/table/:table/booking/:id", BookingController.makeItDone);
 route.put("/table/booking/:id", BookingController.changeState);
+route.get("/booking", BookingController.getActiveBookings);
+
 
 
 
