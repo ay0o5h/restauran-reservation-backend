@@ -65,15 +65,18 @@ export default class BookingController {
                     errRes(res, "tableIsBooked", 404, lang);
                 } else {
                     try {
-                        book = Booking.create({
+                        book = await Booking.create({
                             numOfPeople: body.numOfPeople,
                             resTime: body.resTime,
                             user: req.user,
                             table: body.table,
                         });
-                        book.save();
-                        table.isBooked = true
-                        table.save();
+                        await book.save();
+                        if (table) {
+                            table.isBooked = true;
+                            await table.save();
+
+                        }
                     } catch (err) {
                         console.log(err)
                     }
