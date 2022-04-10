@@ -72,11 +72,11 @@ export default class BookingController {
                             table: body.table,
                         });
                         await book.save();
-                        if (table) {
-                            table.isBooked = true;
-                            await table.save();
+                        // if (table) {
+                        //     table.isBooked = true;
+                        //     await table.save();
 
-                        }
+                        // }
                     } catch (err) {
                         console.log(err)
                     }
