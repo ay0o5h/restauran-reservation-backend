@@ -53,6 +53,7 @@ export default class BookingController {
         console.log(close);
         console.log(open);
 
+        table = await Tables.findOne({ where: { id: body.table } })
 
         if (open === nowDate) errRes(res, "resturantOpen", 404, lang);
         else if (close === nowDate) errRes(res, "resturantClose", 404, lang);
@@ -71,7 +72,6 @@ export default class BookingController {
                             table: body.table,
                         });
                         await book.save();
-                        table = await Tables.findOne({ where: { id: body.table } })
                         table.isBooked = true
                         await table.save();
                     } catch (err) {
@@ -82,7 +82,7 @@ export default class BookingController {
                 }
             }
         }
-        return okRes(res, { book });
+        return okRes(res, { book, table });
     }
     static async EditReservation(req, res): Promise<object> {
         let id = req.params.id;
