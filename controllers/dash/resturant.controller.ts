@@ -40,6 +40,7 @@ export default class ResturantController {
                     alias: "rest",
                     leftJoinAndSelect: {
                         table: "rest.table",
+                        book: "table.book",
                     },
                 },
             });
