@@ -64,21 +64,19 @@ export default class BookingController {
                 if (rest.table[i].isBooked && body.table === rest.table[i].id) {
                     errRes(res, "tableIsBooked", 404, lang);
                 } else {
-                    try {
-                        table.isBooked = true;
-                        if (table.save()) {
-                            book = await Booking.create({
-                                numOfPeople: body.numOfPeople,
-                                resTime: body.resTime,
-                                user: req.user,
-                                table: body.table,
-                            });
-                            await book.save();
 
-                        }
-                    } catch (err) {
-                        console.log(err)
+                    table.isBooked = true;
+                    table.save()
+                    if (table.isBooked) {
+                        book = await Booking.create({
+                            numOfPeople: body.numOfPeople,
+                            resTime: body.resTime,
+                            user: req.user,
+                            table: body.table,
+                        });
+
                     }
+                    await book.save();
 
 
                 }
