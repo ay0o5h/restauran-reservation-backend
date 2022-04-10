@@ -69,13 +69,13 @@ export default class BookingController {
                         user: req.user,
                         table: body.table,
                     });
+                    await book.save();
                     table = await Tables.findOne({ where: { id: body.table } })
-
                     table.isBooked = true
+                    await table.save();
+
                 }
             }
-            await table.save();
-            await book.save();
         }
         return okRes(res, { book });
     }
