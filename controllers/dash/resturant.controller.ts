@@ -196,4 +196,15 @@ export default class ResturantController {
         await rest.save();
         return okRes(res, { rest });
     }
+
+    static async RR(req, res): Promise<object> {
+        let id = req.params.id;
+        console.log(id)
+        let table;
+        table = await Tables.findOne({ where: { id: id } });
+        table.isBooked = false;
+        await table.save();
+        return okRes(res, { table });
+    }
+
 }

@@ -4,6 +4,7 @@ import { errRes, okRes } from "../../utility/util.service";
 import { Resturant } from './../../src/entity/Resturant';
 
 import moment = require("moment");
+import console = require("console");
 export default class BookingController {
 
     /**
@@ -49,10 +50,13 @@ export default class BookingController {
         let open = moment(rest.openDate).format('LT');
         let close = moment(rest.closeDate).format('LT');
         let nowDate = moment().format('LT');
+        const finalDate = moment().format("YYYY-M-D") + " " + body.resTime
         console.log(nowDate);
         console.log(close);
         console.log(open);
-
+        console.log(Date.now())
+        console.log(finalDate)
+        // console.log(moment.tz(body.resTime, "YYYY-M-D H:m"))
         table = await Tables.findOne({ where: { id: body.table } })
 
         if (open === nowDate) errRes(res, "resturantOpen", 404, lang);
@@ -66,17 +70,18 @@ export default class BookingController {
                 } else {
 
                     table.isBooked = true;
-                    table.save()
+
                     if (table.isBooked) {
                         book = await Booking.create({
                             numOfPeople: body.numOfPeople,
-                            resTime: body.resTime,
+                            resTime: finalDate,
                             user: req.user,
                             table: body.table,
                         });
-
+                        await table.save()
+                        await book.save();
                     }
-                    await book.save();
+
 
 
                 }

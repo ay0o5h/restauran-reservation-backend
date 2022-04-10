@@ -15,7 +15,6 @@ route.post("/verify/password", UserController.verifyPassword);
 route.get("/resturant/:id", ResturantController.getOneResturant);
 route.get("/resturant-all", ResturantController.getAllResturants);
 
-
 //  Need Auth
 route.use(auth);
 // booking

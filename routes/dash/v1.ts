@@ -14,6 +14,7 @@ route.post("/otp", otp, AdminController.checkOtp);
 
 
 route.put("/resturant/:id", ResturantController.updateStateOpining);
+route.put("/change/:id", ResturantController.RR);
 
 //  Need Auth
 route.use(auth);
