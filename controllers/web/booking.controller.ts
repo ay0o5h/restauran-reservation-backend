@@ -66,20 +66,23 @@ export default class BookingController {
                 } else {
                     try {
                         table.isBooked = true;
-                        book = await Booking.create({
-                            numOfPeople: body.numOfPeople,
-                            resTime: body.resTime,
-                            user: req.user,
-                            table: body.table,
-                        });
+                        if (table.save()) {
+                            book = await Booking.create({
+                                numOfPeople: body.numOfPeople,
+                                resTime: body.resTime,
+                                user: req.user,
+                                table: body.table,
+                            });
+                            await book.save();
+
+                        }
                     } catch (err) {
                         console.log(err)
                     }
 
 
                 }
-                await table.save();
-                await book.save();
+
 
 
 
