@@ -71,18 +71,19 @@ export default class BookingController {
                             user: req.user,
                             table: body.table,
                         });
-                        await book.save();
-                        // if (table) {
-                        //     table.isBooked = true;
-                        //     await table.save();
 
-                        // }
+                        table.isBooked = true;
+
                     } catch (err) {
                         console.log(err)
                     }
 
 
                 }
+                await book.save();
+                await table.save();
+
+
             }
         }
         return okRes(res, { book, table });
