@@ -1,4 +1,5 @@
 import * as validate from "validate.js";
+import { Booking } from "../../src/entity/Booking";
 import { Tables } from "../../src/entity/Tables";
 import { errRes, okRes } from "../../utility/util.service";
 import Validator from "../../utility/validation";
@@ -169,9 +170,15 @@ export default class ResturantController {
         let lang: any;
         lang = req.query.lang;
         let id = req.params.id;
-        let table;
+        let table, book;
         table = await Tables.findOne({ where: { id: id } });
         if (!table) return errRes(res, "notFound", 404, lang);
+        book = await Booking.findOne({ where: { table: id } })
+        if (!book) return errRes(res, "notFound", 404, lang);
+
+        for (let i = 0; i < book.length; i++) {
+            await book[i].remove();
+        }
         table = await Tables.delete(id);
         return okRes(res, { table });
     }
