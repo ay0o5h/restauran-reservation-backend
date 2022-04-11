@@ -173,7 +173,7 @@ export default class ResturantController {
         let table, book;
         table = await Tables.findOne({ where: { id: id } });
         if (!table) return errRes(res, "notFound", 404, lang);
-        book = await Booking.findOne({ where: { table: id } })
+        book = await Booking.find({ where: { table: id } })
         if (!book) return errRes(res, "notFound", 404, lang);
 
         for (let i = 0; i < book.length; i++) {
